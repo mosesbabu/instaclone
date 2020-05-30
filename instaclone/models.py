@@ -7,9 +7,9 @@ from django.db import models
 
 class Image(models.Model):
     path = models.ImageField(upload_to = 'images/')
-    title = models.CharField(max_length =100)
-    caption = models.TextField()
-    likes = models.IntegerField(max_length = 20)
+    title = models.CharField(max_length =60,null=True)
+    caption = models.CharField(max_length=140,)
+    likes = models.IntegerField(default=0,null = True)
     comments = models.TextField()
     
     def __str__(self):
