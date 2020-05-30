@@ -16,15 +16,21 @@
 		<link rel="stylesheet" href="{% static 'css/style.css' %}" >
 		<link rel="stylesheet" href="{% static 'css/ionicons.min.css' %}" >
     <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/demo.css' %}">
+    <link rel="stylesheet" href="{% static 'css/emoji.css' %}">
+    <link rel="stylesheet" href="{% static 'css/jquery.scrollbar.css' %}">
     
     <!--Google Font-->
     <link href="https://fonts.googleapis.com/css?family=Lato:300,400,400i,700,700i" rel="stylesheet">
     
     <!--Favicon-->
-    <link rel="shortcut icon" type="image/png" href="images/fav.png"/>
+    <link rel="shortcut icon" type="image/png" href="static/images/fav.png"/>
 	</head>
-</body>
+<body>
+
 {% include 'navbar.html' %}
+
+
 {% block content %}{% endblock %}
 
 

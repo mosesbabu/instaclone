@@ -5,6 +5,10 @@ from . import views
 
 
 urlpatterns=[
-  url(r'^$',views.newsfeed,name='Home'),
+  url(r'^feed/',views.newsfeed,name='Home'),
+  url(r'^$',views.signup,name='SignUp'),
+  url(r'^newsfeed_images/',views.newsfeed_images,name='images'),
+  url(r'^profile/',views.profile,name='Profile'),
+  url(r'^about_me/',views.profile_about,name='about'),
  
 ]
