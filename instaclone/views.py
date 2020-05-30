@@ -2,6 +2,8 @@ from django.shortcuts import render
 
 # Create your views here.
 def newsfeed(request):
+    posts= Image.objects.all(),
+    commentform= CommentForm()
     return render(request, 'newsfeed.html')
 
 

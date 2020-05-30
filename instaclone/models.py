@@ -1,51 +1,76 @@
 from django.db import models
+from django.contrib.auth.models import User
+from tinymce.models import HTMLField
+from django.db.models import Q
 
+import datetime as dt
+
+Gender=(
+    ('Male','Male'),
+    ('Female','Female'),
+)
 # Create your models here.
+class Location(models.Model):
+    location = models.CharField(max_length=100)
 
-
-
-
-class Image(models.Model):
-    path = models.ImageField(upload_to = 'images/')
-    title = models.CharField(max_length =60,null=True)
-    caption = models.CharField(max_length=140,)
-    likes = models.IntegerField(default=0,null = True)
-    comments = models.TextField()
-    
     def __str__(self):
-        return self.title
-    
-    def save_image(self):
+        return self.location
+
+    class Meta:
+        ordering = ['location']
+
+    def save_location(self):
         self.save()
-        
-    def delete_image(self):
-        self.delete()
-               
 
     @classmethod
-    def search_by_category(cls,search_term):
-        search_result = cls.objects.filter(image_category__name__icontains=search_term)
-        return search_result
+    def delete_location(cls,location):
+        cls.objects.filter(location=location).delete()
+
+class Post(models.Model):
+    profile_pic = models.ImageField(upload_to = 'profilepics/')
+    caption = models.CharField(max_length=3000)
+    username = models.ForeignKey(User,on_delete=models.CASCADE)
+    post = models.ImageField(upload_to='posts/')
+    likes = models.IntegerField()
+
+    location = models.ForeignKey(Location,on_delete=models.CASCADE)
+
+    post_date=models.DateTimeField(auto_now_add=True)
+
+    def __str__(self):
+        return self.username
+
+class Profile(models.Model):
+    profile_pic = models.ImageField(upload_to='profilepics/')
+    bio = HTMLField()
+    name = models.CharField(max_length=255)
+    username = models.ForeignKey(User,on_delete=models.CASCADE)
+    email= models.EmailField()
+    phonenumber = models.IntegerField()
+    gender = models.CharField(max_length=15,choices=Gender,default="Male")
+
+    def __str__(self):
+        return self.username
 
     @classmethod
-    def get_image_by_id(cls,incoming_id):
-        image_result = cls.objects.get(id=incoming_id)
-        return image_result
+    def search_profile(cls,search_term):
+        profiles = cls.objects.filter(Q(username__username=search_term) | Q(name__icontains=search_term))
 
-    def save_image(self):
+        return profiles
+
+class Comment(models.Model):
+    comment = models.CharField(max_length=300)
+    username = models.ForeignKey(User,on_delete=models.CASCADE)
+    # post = models.ForeignKey(Post,on_delete=models.CASCADE)
+    post = models.IntegerField()
+
+    def save_comment(self):
         self.save()
-    def delete_image(self):
-        self.delete()
 
-        
-    @classmethod
-    def retrieve_all(cls):
-        all_objects = Image.objects.all()
-        for item in all_objects:
-            return item
-
-
-    @classmethod
-    def update_image(cls,current_value,new_value):
-        fetched_object = Image.objects.filter(image_name=current_value).update(image_name=new_value)
-        return fetched_object
+    # @classmethod
+    # def delete_comment(self):
+    #     self.delete()
+    #
+class Followers(models.Model):
+    username= models.ForeignKey(User,on_delete=models.CASCADE)
+    user = models.CharField(max_length=100)
