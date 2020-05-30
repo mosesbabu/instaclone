@@ -16,11 +16,11 @@ from .models import Image,Comment
 from user.models import User,Profile
 
 
-def home(request):
+def feed(request):
     posts= Image.objects.all(),
     commentform= CommentForm()
     
-    return render(request, 'index.html', locals())
+    return render(request, 'newsfeed.html', locals())
 
 class PostListView(LoginRequiredMixin,ListView):
     model=Image

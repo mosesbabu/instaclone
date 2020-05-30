@@ -1,75 +1,61 @@
 from django.db import models
 from django.contrib.auth.models import User
-from tinymce.models import HTMLField
-from django.db.models import Q
-
-import datetime as dt
-
-Gender=(
-    ('Male','Male'),
-    ('Female','Female'),
-)
+from django.urls import reverse
+from user.models import Profile
 # Create your models here.
-class Location(models.Model):
-    location = models.CharField(max_length=100)
+class Image(models.Model):
+    image = models.ImageField(upload_to='images/')
+    author = models.ForeignKey(User, null=True, blank=True, on_delete=models.CASCADE,related_name="yg")
+    title = models.CharField(max_length=60, null=True)
+    time_created = models.DateTimeField(auto_now=True, auto_now_add=False)
+    likes = models.IntegerField(default=0, null=True)
+    caption = models.CharField(max_length=140, default="")
+    user_profile = models.ForeignKey(Profile, on_delete=models.CASCADE,null=True)
 
     def __str__(self):
-        return self.location
+        return self.title
+
+    def get_absolute_url(self):
+        return reverse('home')
+    def save_image(self):
+        self.save()
+
+    @classmethod
+    def retrieve_all(cls):
+        all_objects = Image.objects.all()
+        for item in all_objects:
+            return item;
+
+    @classmethod
+    def get_image_by_id(cls,incoming_id):
+        image_result = cls.objects.get(id=incoming_id)
+        return image_result
+
+
+    @classmethod
+    def update_image(cls,current_value,new_value):
+        fetched_object = Image.objects.filter(author=current_value).update(author=new_value)
+        return fetched_object
+class Comment(models.Model):
+    post = models.ForeignKey('Image', null=True,on_delete=models.CASCADE)
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
+    comment = models.CharField(max_length=100)
+    posted_on = models.DateTimeField(auto_now=True)
+
+    def __str__(self):
+        return self.comment
+
+
+class Like(models.Model):
+    post = models.ForeignKey('Image',on_delete=models.CASCADE)
+    user = models.ForeignKey(User,on_delete=models.CASCADE)
 
     class Meta:
-        ordering = ['location']
-
-    def save_location(self):
-        self.save()
-
-    @classmethod
-    def delete_location(cls,location):
-        cls.objects.filter(location=location).delete()
-
-class Post(models.Model):
-    caption = models.CharField(max_length=3000)
-    username = models.ForeignKey(User,on_delete=models.CASCADE)
-    post = models.ImageField(upload_to='posts/')
-    likes = models.IntegerField()
-
-    location = models.ForeignKey(Location,on_delete=models.CASCADE)
-
-    post_date=models.DateTimeField(auto_now_add=True)
+        unique_together = ("post", "user")
 
     def __str__(self):
-        return self.username
+        return 'Like: ' + self.user.username + ' ' + self.post.title
 
-class Profile(models.Model):
-    profile_pic = models.ImageField(upload_to='profilepics/')
-    bio = HTMLField()
-    name = models.CharField(max_length=255)
-    username = models.ForeignKey(User,on_delete=models.CASCADE)
-    email= models.EmailField()
-    phonenumber = models.IntegerField()
-    gender = models.CharField(max_length=15,choices=Gender,default="Male")
-
-    def __str__(self):
-        return self.username
-
-    @classmethod
-    def search_profile(cls,search_term):
-        profiles = cls.objects.filter(Q(username__username=search_term) | Q(name__icontains=search_term))
-
-        return profiles
-
-class Comment(models.Model):
-    comment = models.CharField(max_length=300)
-    username = models.ForeignKey(User,on_delete=models.CASCADE)
-    # post = models.ForeignKey(Post,on_delete=models.CASCADE)
-    post = models.IntegerField()
-
-    def save_comment(self):
-        self.save()
-
-    # @classmethod
-    # def delete_comment(self):
-    #     self.delete()
-    #
 class Followers(models.Model):
-    username= models.ForeignKey(User,on_delete=models.CASCADE)
-    user = models.CharField(max_length=100)
+    user = models.CharField(max_length=20,default='')
+    Follower = models.CharField(max_length=20,default='')
