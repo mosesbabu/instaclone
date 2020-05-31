@@ -5,7 +5,7 @@ from django.contrib.auth.models import User
 from user.models import Profile
 from django.test import TestCase
 from .models import Image
-class Intagram_TestCases(TestCase):
+class Instaclone_TestCases(TestCase):
     def setUp(self):
         self.user1= User(id=1,username='Moses',email='moses@gmail.com',password='admin')
         self.user1.save()
