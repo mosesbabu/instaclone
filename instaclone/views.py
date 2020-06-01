@@ -48,7 +48,7 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
 class create_comment(CreateView):
     model=Comment
-    template_name= 'instagram/image_list.html' # <app>/<model>_<view_type>.html
+    template_name= 'instaclone/newsfeed.html' # <app>/<model>_<view_type>.html
     
     context_object_name = 'comments'
     ordering = ['-posted_on']
@@ -118,7 +118,7 @@ def post(request, pk):
         'post': post,
         'liked': liked
     }
-    return render(request, 'instagram/newsfeed.html', context)
+    return render(request, 'instaclone/newsfeed.html', context)
 
 
 def likes(request, pk):
