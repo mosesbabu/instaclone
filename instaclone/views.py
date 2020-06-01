@@ -34,7 +34,7 @@ class PostListView(LoginRequiredMixin,ListView):
 
 class PostCreateView(LoginRequiredMixin,CreateView):
     form_class = PhotoUploadModelForm
-    template_name = 'instagram/image_upload.html'
+    template_name = 'instaclone/image_upload.html'
  
     def form_valid(self, form):
         form.instance.author = self.request.user
@@ -118,7 +118,7 @@ def post(request, pk):
         'post': post,
         'liked': liked
     }
-    return render(request, 'instagram/post.html', context)
+    return render(request, 'instagram/newsfeed.html', context)
 
 
 def likes(request, pk):

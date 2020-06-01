@@ -56,6 +56,7 @@ def activate(request, uidb64, token):
         messages.success(request, f'Activation link is invalid!')
         return redirect('login')
 
+
 @login_required
 def profile(request):
     return render(request, 'users/profile.html')
