@@ -1,0 +1,11 @@
+.app-download-links {
+    text-align: center;
+  }
+  
+  .app-download-links p {
+    margin-bottom: 25px;
+  }
+  .app-download-links a img {
+    height: 45px;
+    margin: 0 7px 20px;
+  }

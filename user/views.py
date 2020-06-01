@@ -10,7 +10,7 @@ from django.template.loader import render_to_string
 from .tokens import account_activation_token
 from django.core.mail import EmailMessage
 from django.http import HttpResponse
-from instagram.models import User
+from instaclone.models import User
 def register(request):
     if request.method == 'POST':
         form = UserRegisterForm(request.POST)
@@ -22,8 +22,8 @@ def register(request):
 
             username = form.cleaned_data.get('username')
             messages.success(request, f'Account created for {username}!,Please confirm your email address to complete the registration')
-            mail_subject = 'Activate your blog account.'
-            message = render_to_string('acc_active_email.html', {
+            mail_subject = 'Activate your instaclone account.'
+            message = render_to_string('acivate_email.html', {
                 'user': user,
                 'domain': current_site.domain,
                 'uid':urlsafe_base64_encode(force_bytes(user.pk)),
@@ -37,7 +37,7 @@ def register(request):
             return redirect('login')
     else:
         form = UserRegisterForm()
-    return render(request, 'users/register.html', {'form': form})
+    return render(request, 'users/signup.html', {'form': form})
 
 
 def activate(request, uidb64, token):
