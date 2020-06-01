@@ -1,5 +1,6 @@
 {% extends 'base.html' %}
 {% block content %}
+{% load static custom_tags %}
     
      <div id="page-contents">
     	<div class="container">
@@ -9,7 +10,11 @@
           ================================================= -->
     			<div class="col-md-3 static">
             <div class="profile-card">
-            	<img src="{{ user_profile.profile_path.url }}" alt="user" class="profile-photo" />
+              {% if profile.profile_path %}
+              <img src="{{ profile.profile_path.url }}" alt="user" class="profile-photo" />
+              {% else %}
+                <img class="picture-circle" src="{% static 'images/profile_placeholder.jpg' %}">
+              {% endif %}
             	<h5><a href="timeline.html" class="text-white">{{user.username}}</a></h5>
             </div><!--profile card ends-->
             <ul class="nav-news-feed">
