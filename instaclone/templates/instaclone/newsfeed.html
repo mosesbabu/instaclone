@@ -57,7 +57,7 @@
                 <div class="post-detail">
                   <div class="user-info">
                     <h5><a href="timeline.html" class="profile-link">Alexis Clark</a> <span class="following">following</span></h5>
-                    <p class="text-muted">Published a photo about 3 mins ago</p>
+                    <p class="text-muted">Published  {{ post.time_created|timesince }} ago</p>
                   </div>
                   <div class="reaction">
                     <a class="btn text-green"><i class="icon ion-thumbsup"></i> 13</a>
@@ -68,12 +68,14 @@
                     <p>{{post.caption}}. <i class="em em-anguished"></i> <i class="em em-anguished"></i> <i class="em em-anguished"></i></p>
                   </div>
                   <div class="line-divider"></div>
+                  {% for comment in post.comment_set.all %}
                   <div class="post-comment">
-                    {% for comment in post.comment_set.all %}
-                    <img src="images/users/user-11.jpg" alt="" class="profile-photo-sm" />
-                    <p><a href="timeline.html" class="profile-link">{{ comment.user.username }}</a><i class="em em-laughing"></i>{{ comment.comment }} </p>
-                    {% endfor %}
+                    
+                    <img src="{{ post.user_profile.profile_path.url }}" alt="" class="profile-photo-sm" />
+                    <p><a href="timeline.html" class="profile-link">{{ comment.user.username }}</a></i>{{ comment.comment }} </p>
+                    
                   </div>
+                  {% endfor %}
                   <div class="post-comment">
                     <img src="images/users/user-1.jpg" alt="" class="profile-photo-sm" />
                     <input type="text" class="form-control" placeholder="Post a comment">
