@@ -11,7 +11,7 @@
     			<div class="col-md-3 static">
             <div class="profile-card">
               
-              <img src="{{ profile.profile_path.url }}" alt="user" class="profile-photo" />
+              <img src="{{ post.user_profile.profile_path.url }}" alt="user" class="profile-photo" />
           
             	<h5><a href="timeline.html" class="text-white">{{user.username}}</a></h5>
             </div><!--profile card ends-->
@@ -81,7 +81,9 @@
                     <form action="{% url 'comment' post_id=post.id %}" method="post"></form>
                     <img src="images/users/user-1.jpg" alt="" class="profile-photo-sm" />
                     <input type="text" class="form-control" placeholder="Post a comment">
+                  </form>
                   </div>
+                  {% endif %}
                 </div>
               </div>
             {% endfor %}
