@@ -76,7 +76,9 @@
                     
                   </div>
                   {% endfor %}
+                  {% if request.user.is_authenticated %}
                   <div class="post-comment">
+                    <form action="{% url 'comment' post_id=post.id %}" method="post"></form>
                     <img src="images/users/user-1.jpg" alt="" class="profile-photo-sm" />
                     <input type="text" class="form-control" placeholder="Post a comment">
                   </div>
