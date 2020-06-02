@@ -23,8 +23,9 @@ def feed(request):
     return render(request, 'newsfeed.html', locals())
 
 class PostListView(LoginRequiredMixin,ListView):
+    posts= Image.objects.all()
     model=Image
-    template_name= 'instagram/image_list.html' # <app>/<model>_<view_type>.html
+    template_name= 'instaclone/newsfeed.html' 
     
     context_object_name = 'posts'
     ordering = ['-time_created']
