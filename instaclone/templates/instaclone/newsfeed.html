@@ -69,12 +69,10 @@
                   </div>
                   <div class="line-divider"></div>
                   <div class="post-comment">
+                    {% for comment in post.comment_set.all %}
                     <img src="images/users/user-11.jpg" alt="" class="profile-photo-sm" />
-                    <p><a href="timeline.html" class="profile-link">Diana </a><i class="em em-laughing"></i> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud </p>
-                  </div>
-                  <div class="post-comment">
-                    <img src="images/users/user-4.jpg" alt="" class="profile-photo-sm" />
-                    <p><a href="timeline.html" class="profile-link">John</a> Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud </p>
+                    <p><a href="timeline.html" class="profile-link">{{ comment.user.username }}</a><i class="em em-laughing"></i>{{ comment.comment }} </p>
+                    {% endfor %}
                   </div>
                   <div class="post-comment">
                     <img src="images/users/user-1.jpg" alt="" class="profile-photo-sm" />

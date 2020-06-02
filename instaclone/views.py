@@ -104,7 +104,7 @@ def profile(request, username):
     }
     print(profile.user.username)
     print(profile.image)
-    return render(request, 'instagram/profile.html', context)
+    return render(request, 'instaclone/profile.html', context)
 @login_required(login_url='/accounts/login/')
 def post(request, pk):
     post = Image.objects.get(pk=pk)
