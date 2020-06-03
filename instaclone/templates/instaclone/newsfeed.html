@@ -11,7 +11,7 @@
     			<div class="col-md-3 static">
             <div class="profile-card">
               
-              <img src="{{ post.user_profile.profile_path.url }}" alt="user" class="profile-photo" />
+              <img src="{{ user_profile.profile_path.url }}" alt="user" class="profile-photo" />
           
             	<h5><a href="timeline.html" class="text-white">{{user.username}}</a></h5>
             </div><!--profile card ends-->
@@ -80,8 +80,12 @@
                   <div class="post-comment">
                     <form action="{% url 'comment' post_id=post.id %}" method="post"></form>
                     <img src="images/users/user-1.jpg" alt="" class="profile-photo-sm" />
-                    <input type="text" class="form-control" placeholder="Post a comment">
+                    {% csrf_token %}
+                    <input type="text" id="comment{{post.id}}" class="form-control" placeholder="Post a comment"><button class="btn-primary">Post</button>
                   </form>
+                  </div>
+                  <div class="hidden-data {{ post.pk }}" style="display: none;">
+                    <span class="post-pk">{{ post.pk }}</span>
                   </div>
                   {% endif %}
                 </div>
@@ -99,12 +103,15 @@
     			<div class="col-md-2 static">
             <div class="suggestions" id="sticky-sidebar">
               <h4 class="grey">Who to Follow</h4>
+              
               <div class="follow-user">
+                {% for profile in profiles %}
                 <img src="images/users/user-11.jpg" alt="" class="profile-photo-sm pull-left" />
                 <div>
-                  <h5><a href="timeline.html">Diana Amber</a></h5>
+                  <h5><a href="timeline.html">{{ profile.user.username }}</a></h5>
                   <a href="#" class="text-green">Add friend</a>
                 </div>
+                {% endfor %}
               </div>
              
             </div>

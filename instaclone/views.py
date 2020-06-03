@@ -49,7 +49,7 @@ class PostUpdateView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
 class create_comment(CreateView):
     model=Comment
-    template_name= 'instaclone/newsfeed.html' # <app>/<model>_<view_type>.html
+    template_name= 'instaclone/newsfeed.html' 
     
     context_object_name = 'comments'
     ordering = ['-posted_on']
@@ -104,7 +104,7 @@ def profile(request, username):
     }
     print(profile.user.username)
     print(profile.image)
-    return render(request, 'instaclone/profile.html', context)
+    return render(request, 'instaclone/users/profile.html', context)
 @login_required(login_url='/accounts/login/')
 def post(request, pk):
     post = Image.objects.get(pk=pk)
@@ -139,14 +139,14 @@ def likes(request, pk):
 def followers(request, username):
     user = User.objects.get(username=username)
     user_profile = Profile.objects.get(user=user)
-    profiles = user_profile.followers.all
+    profiles = user_profile.all
 
     context = {
         'header': 'Followers',
         'profiles': profiles,
     }
 
-    return render(request, 'instagram/follow_list.html', context)
+    return render(request, 'instaclone/newsfeed', context)
 
 @login_required(login_url='/accounts/login/')
 def following(request, username):
@@ -158,7 +158,7 @@ def following(request, username):
         'header': 'Following',
         'profiles': profiles
     }
-    return render(request, 'instagram/follow_list.html', context)
+    return render(request, 'instaclone/newsfeed.html', context)
 @login_required(login_url='/accounts/login/')
 def profile_settings(request, username):
     user = User.objects.get(username=username)
