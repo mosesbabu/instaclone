@@ -23,7 +23,8 @@ def feed(request):
     return render(request, 'newsfeed.html', locals())
 
 class PostListView(LoginRequiredMixin,ListView):
-    posts= Image.objects.all()
+    posts= Image.objects.all(),
+    friend_follow=User.objects.all()
     model=Image
     template_name= 'instaclone/newsfeed.html' 
     

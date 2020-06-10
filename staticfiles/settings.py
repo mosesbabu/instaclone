@@ -42,6 +42,7 @@ INSTALLED_APPS = [
     'user',
     'friendship',
     'crispy_forms',
+    'bootstrap4',
     
 ]
 
@@ -82,7 +83,7 @@ WSGI_APPLICATION = 'igclone.wsgi.application'
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.postgresql',
-        'NAME': 'inclone',
+        'NAME': 'instaclone',
         'USER': 'postgres',
         'PASSWORD':'software112',
     }
